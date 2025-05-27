@@ -28,10 +28,12 @@ window.handleRedeem = async function (name, score) {
   `;
 
   form.innerHTML = `
-    <h3>🎁 Redeem Your Score</h3>
+    <h3>🏱 Redeem Your Score</h3>
     <p><strong>Score:</strong> ${score}</p>
     <label for="userIdInput">Your Raja Games User ID</label><br/>
-    <input id="userIdInput" type="text" style="width: 90%; padding: 13px; margin-top: 8px; border-radius: 10px; border: none;" />
+    <input id="userIdInput" type="text" style="width: 90%; padding: 13px; margin-top: 8px; border-radius: 10px; border: none;" /><br/><br/>
+    <label for="usernameInput">Your Telegram Username</label><br/>
+    <input id="usernameInput" type="text" placeholder="@yourusername" style="width: 90%; padding: 13px; margin-top: 8px; border-radius: 10px; border: none;" />
     <div id="formMessage" style="margin-top: 8px; min-height: 20px;"></div><br/>
     <button id="registerBtn" style="padding: 15px; border: none; border-radius: 8px; background: linear-gradient(45deg, #2a38f1, #b70aff); color: white; width: 138.5px; margin-right: 10px; font-size: 16px;">Register</button>
     <button id="submitBtn" style="padding: 15px; border: none; border-radius: 8px; background: linear-gradient(45deg, #2a38f1, #b70aff); color: white; width: 138.5px; font-size: 16px;">Submit</button>
@@ -56,37 +58,45 @@ window.handleRedeem = async function (name, score) {
   };
 
   // Register
-form.querySelector('#registerBtn').onclick = () => {
-  const registerUrl = 'https://www.rajagames8.com/#/register?invitationCode=48335807956';
+  form.querySelector('#registerBtn').onclick = () => {
+    const registerUrl = 'https://www.rajagames8.com/#/register?invitationCode=48335807956';
 
-  try {
-    if (window.Telegram?.WebApp?.openLink) {
-      Telegram.WebApp.openLink(registerUrl);
-    } else {
-      window.open(registerUrl, '_blank');
+    try {
+      if (window.Telegram?.WebApp?.openLink) {
+        Telegram.WebApp.openLink(registerUrl);
+      } else {
+        navigator.clipboard.writeText(registerUrl).then(() => {
+          alert("Link copied! Open your browser and paste it to register.");
+        });
+      }
+    } catch (e) {
+      console.error('Register open failed:', e);
+      alert("Couldn't open link. Copy and paste it in your browser:", registerUrl);
     }
-  } catch (e) {
-    console.error('Register open failed:', e);
-    window.open(registerUrl, '_blank');
-  }
-};
+  };
 
   // Submit
   submitBtn.onclick = async () => {
     const userId = form.querySelector('#userIdInput').value.trim();
+    const username = form.querySelector('#usernameInput').value.trim();
+
     if (!userId) {
       showMessage('Please enter your Raja Games User ID.');
+      return;
+    }
+    if (!username || !username.startsWith('@')) {
+      showMessage('Please enter a valid Telegram username starting with @');
       return;
     }
 
     submitBtn.disabled = true;
 
     try {
-      const hash = await generateHash(name, score);
+      const hash = await generateHash(username, score);
       const response = await fetch('https://7d478868-b979-4bbd-a852-e6cfc02ab3ff-00-2m4seg7ci4agz.sisko.replit.dev/redeem', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, score, userId, hash })
+        body: JSON.stringify({ name: username, score, userId, hash })
       });
 
       const result = await response.json();
@@ -109,7 +119,7 @@ form.querySelector('#registerBtn').onclick = () => {
           if (countdown) countdown.classList.add('hidden');
 
           if (window.resetTotalScore) {
-            window.resetTotalScore(); // Reset score and UI
+            window.resetTotalScore();
           }
         }, 1500);
       } else {
