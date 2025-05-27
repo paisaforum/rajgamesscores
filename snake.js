@@ -109,8 +109,15 @@ function endGame() {
   controls.classList.add('hidden');
   popup.classList.remove('hidden');
 
-  const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
-  const name = telegramUser?.username || 'anonymous';
+const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+const name = telegramUser?.username
+  ? `@${telegramUser.username}`
+  : telegramUser?.first_name || 'anonymous';
+
+playerNameSpan.textContent = name;
+scoreSpan.textContent = totalScore;
+
+
   playerNameSpan.textContent = name;
   scoreSpan.textContent = totalScore;
 
