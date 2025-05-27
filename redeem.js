@@ -72,7 +72,7 @@ window.handleRedeem = async function (name, score) {
 
     try {
       const hash = await generateHash(name, score);
-      const response = await fetch('/redeem', {
+      const response = await fetch('https://7d478868-b979-4bbd-a852-e6cfc02ab3ff-00-2m4seg7ci4agz.sisko.replit.dev/redeem', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, score, userId, hash })
