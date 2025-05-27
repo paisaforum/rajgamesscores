@@ -115,7 +115,7 @@ background: #000000;
   }
   
   #milestoneFill {
-        background: linear-gradient(45deg, #3e9b19, #95ff0a);
+        background: linear-gradient(45deg, #0f379a, #ff0a94);
     height: 100%;
     width: 0%;
     transition: width 0.3s ease-in-out;
