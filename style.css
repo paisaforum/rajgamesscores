@@ -11,7 +11,16 @@ body {
     justify-content: center;
     padding: 20px;
   }
-  
+
+
+#gameCanvas {
+  width: 90vw;
+  height: auto;
+  max-width: 600px;
+  display: block;
+  margin: auto;
+}
+
   #game-container {
     text-align: center;
     position: relative;
