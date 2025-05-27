@@ -57,7 +57,12 @@ window.handleRedeem = async function (name, score) {
 
   // Register
   form.querySelector('#registerBtn').onclick = () => {
-    window.open('https://www.rajagames8.com/#/register?invitationCode=48335807956', '_blank');
+    if (window.Telegram?.WebApp?.openLink) {
+  Telegram.WebApp.openLink('https://www.rajagames8.com/#/register?invitationCode=48335807956');
+} else {
+  window.open('https://www.rajagames8.com/#/register?invitationCode=48335807956', '_blank');
+}
+
   };
 
   // Submit
