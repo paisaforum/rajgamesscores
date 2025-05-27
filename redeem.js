@@ -1,4 +1,4 @@
-import { generateHash } from 'utils.js';
+import { generateHash } from './utils.js';
 
 // Attach global handler (used by snake.js)
 window.handleRedeem = async function (name, score) {
