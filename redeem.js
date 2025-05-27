@@ -56,18 +56,20 @@ window.handleRedeem = async function (name, score) {
   };
 
   // Register
-  form.querySelector('#registerBtn').onclick = () => {
+form.querySelector('#registerBtn').onclick = () => {
+  const registerUrl = 'https://www.rajagames8.com/#/register?invitationCode=48335807956';
 
-
-    const registerUrl = 'https://www.rajagames8.com/#/register?invitationCode=48335807956';
-if (window.Telegram?.WebApp?.openLink) {
-  Telegram.WebApp.openLink(registerUrl);
-} else {
-  window.open(registerUrl, '_blank');
-}
-
-
-  };
+  try {
+    if (window.Telegram?.WebApp?.openLink) {
+      Telegram.WebApp.openLink(registerUrl);
+    } else {
+      window.open(registerUrl, '_blank');
+    }
+  } catch (e) {
+    console.error('Register open failed:', e);
+    window.open(registerUrl, '_blank');
+  }
+};
 
   // Submit
   submitBtn.onclick = async () => {
