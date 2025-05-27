@@ -29,8 +29,10 @@ body {
   }
   
   canvas {
-    background: #222;
+background: #000000;
     margin-bottom: 10px;
+    border: 7px solid #486078;
+    border-radius: 20px;
   }
   
   #liveScore {
@@ -113,7 +115,7 @@ body {
   }
   
   #milestoneFill {
-    background: limegreen;
+        background: linear-gradient(45deg, #3e9b19, #95ff0a);
     height: 100%;
     width: 0%;
     transition: width 0.3s ease-in-out;
