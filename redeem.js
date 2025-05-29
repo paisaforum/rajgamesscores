@@ -1,4 +1,4 @@
-import { generateHash } from './utils.js';
+const generateHash = window.generateHash;
 
 const influencer = Telegram?.WebApp?.initDataUnsafe?.start_param || "default";
 
