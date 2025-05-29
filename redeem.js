@@ -67,22 +67,67 @@ window.handleRedeem = async function (name, score) {
   };
 
   // Register
-  form.querySelector('#registerBtn').onclick = () => {
-    const registerUrl = 'https://www.rajagames8.com/#/register?invitationCode=48335807956';
+form.querySelector('#registerBtn').onclick = () => {
+  const registerUrl = registerLinks[influencer] || registerLinks.default;
 
-    try {
-      if (window.Telegram?.WebApp?.openLink) {
-        Telegram.WebApp.openLink(registerUrl);
-      } else {
-        navigator.clipboard.writeText(registerUrl).then(() => {
-          alert("Link copied! Open your browser and paste it to register.");
-        });
-      }
-    } catch (e) {
-      console.error('Register open failed:', e);
-      alert("Couldn't open link. Copy and paste it in your browser:", registerUrl);
-    }
+  // Create new modal
+  const modal = document.createElement('div');
+  modal.style = `
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+  `;
+
+  const modalContent = document.createElement('div');
+  modalContent.style = `
+    background: #1a1a1a;
+    color: #fff;
+    padding: 20px;
+    width: 340px;
+    border-radius: 12px;
+    font-family: sans-serif;
+    text-align: left;
+  `;
+
+  modalContent.innerHTML = `
+    <h3>📲 Register to Redeem</h3>
+    <ol style="padding-left: 20px;">
+      <li>Tap the <strong>Copy Link</strong> button below</li>
+      <li>Open your browser (e.g., Chrome, Safari)</li>
+      <li>Paste the link into the address bar and hit Go</li>
+    </ol>
+    <div style="margin: 10px 0;">
+      <input id="copyField" value="${registerUrl}" readonly style="width: 100%; padding: 10px; border-radius: 8px; border: none; font-size: 14px;" />
+    </div>
+    <button id="copyBtn" style="padding: 10px 15px; border: none; background: #4caf50; color: white; border-radius: 6px; cursor: pointer;">📋 Copy Link</button>
+    <button id="closeModal" style="margin-left: 10px; padding: 10px 15px; border: none; background: #f44336; color: white; border-radius: 6px; cursor: pointer;">Close</button>
+  `;
+
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+
+  // Copy link logic
+  modalContent.querySelector('#copyBtn').onclick = () => {
+    const copyField = modalContent.querySelector('#copyField');
+    copyField.select();
+    document.execCommand('copy');
+    alert('✅ Link copied! Now paste it in your browser to register.');
   };
+
+  // Close modal
+  modalContent.querySelector('#closeModal').onclick = () => {
+    document.body.removeChild(modal);
+  };
+};
+
+
+
+
+  
 
   // Submit
   submitBtn.onclick = async () => {
