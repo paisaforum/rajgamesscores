@@ -1,4 +1,4 @@
-export async function generateHash(name, score) {
+window.generateHash = async function (name, score) {
   const secret = "Vj34s$9!kL1@Q2rXz8#H7fW0eTpGcYnA"; // Must match backend
 
   const encoder = new TextEncoder();
@@ -7,4 +7,4 @@ export async function generateHash(name, score) {
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
+};
