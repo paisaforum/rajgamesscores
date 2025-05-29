@@ -1,5 +1,14 @@
 import { generateHash } from './utils.js';
 
+const influencer = Telegram?.WebApp?.initDataUnsafe?.start_param || "default";
+
+const registerLinks = {
+  techguru: "https://www.rajagames8.com/#/register?ref=techguru",
+  cryptoqueen: "https://www.rajagames8.com/#/register?ref=cryptoqueen",
+  default: "https://www.rajagames8.com/#/register"
+};
+
+
 // Attach global handler (used by snake.js)
 window.handleRedeem = async function (name, score) {
   // Create overlay
