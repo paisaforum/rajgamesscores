@@ -1,16 +1,17 @@
 const generateHash = window.generateHash;
 
-// Safely fetch influencer start_param from Telegram context
+// Extract influencer name safely from Telegram WebApp context
 const influencer = window.Telegram?.WebApp?.initDataUnsafe?.start_param?.trim().toLowerCase() || "default";
 console.log("🎯 Influencer (start_param):", influencer);
 
+// Influencer register link map
 const registerLinks = {
   techguru: "https://www.rajagames8.com/#/register?ref=techguru",
   cryptoqueen: "https://www.rajagames8.com/#/register?ref=cryptoqueen",
   default: "https://www.rajagames8.com/#/register"
 };
 
-// Attach global handler (used by snake.js)
+// Attach global handler used by snake.js
 window.handleRedeem = async function (name, score) {
   console.log("🟢 handleRedeem called with", { name, score });
 
@@ -67,7 +68,7 @@ window.handleRedeem = async function (name, score) {
     document.body.removeChild(overlay);
   };
 
-  // Register flow with modal
+  // Register
   form.querySelector('#registerBtn').onclick = () => {
     const registerUrl = registerLinks[influencer] || registerLinks.default;
     console.log("🔗 Register URL:", registerUrl);
@@ -146,7 +147,7 @@ window.handleRedeem = async function (name, score) {
         score,
         userId,
         hash,
-        influencer // attach this for tracking
+        influencer
       };
 
       console.log("📤 Submitting redeem payload:", payload);
