@@ -1,6 +1,10 @@
 const generateHash = window.generateHash;
 
-const influencer = Telegram?.WebApp?.initDataUnsafe?.start_param || "default";
+const influencer = window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe?.start_param
+  ? Telegram.WebApp.initDataUnsafe.start_param
+  : "default";
+console.log("Influencer:", influencer);
+
 
 const registerLinks = {
   techguru: "https://www.rajagames8.com/#/register?ref=techguru",
